@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="app">
+        
+        <div class="container">
+            <div class="grid">
+                <div class="row">
+                    <h1 class="text-uppercase text-center mt-3">Teacher list</h1>
+                    <div class="function__mgt">
+                        {% if is_granted('ROLE_ADMIN') %}
+                       <div class="function__mgt-add">
+                            <a class="btn btn-primary" href="{{ path('teacher_add') }}">Add Teacher</a>
+                       </div>
+                        {% endif %}
+                       <div class="function__mgt-search">
+                            <form class="d-flex input-group w-auto">
+                                <input type="search" class="form-control rounded" placeholder="Search"
+                                    aria-label="Search" aria-describedby="search-addon" />
+                                <span class="input-group-text border-0" id="search-addon">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </form>
+                       </div>
+                        
+                    </div>
+                    <div class="e-panel card" style="background-color: #f5f5f5">
+                        <div class="card-body">
+                            <div class="card-title">
+                            </div>
+                            <div class="e-table">
+                                <div class="table-responsive table-lg mt-3">
+                                    <table class="table table-bordered">
+                                        <thead style="text-align: center;">
+                                             <tr>
+												<th>ID</th>
+												<th>NAME</th>
+												<th>Image</th>
+                                                 {% if is_granted('ROLE_ADMIN') %}
+												<th>Menu</th>
+                                                {% endif %}
+											</tr>
+                                        </thead>
+                                        <tbody style="text-align: center;">
+                                            	{% for teacher in teachers %}
+												<tr>
+													<td>{{ teacher.id }}</td>
+													<td>
+														<a class="text-info" href="{{ path('teacher_detail', {'id': teacher.id}) }}">
+															{{ teacher.name }}
+														</a>
+													</td>
+													<td>  <img src="{{ asset ('images/teacher/'~ teacher.image)}}" alt="" width="150" height="150"></td>
+                                                    {% if is_granted('ROLE_ADMIN') %}
+													<td>
+														<a  class="btn btn-success" href="{{ path('teacher_edit', {'id': teacher.id}) }}">
+														<i class="fas fa-user-edit"></i></a>
+														<a class="btn btn-danger" href="{{ path('teacher_delete', {'id': teacher.id}) }}"
+														onclick="return confirm('Are you sure to delete this teacher ?')">
+														<i class="fas fa-trash-alt"></i></a>
+													</td>
+                                                    {% endif %}
+												</tr>
+											{% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

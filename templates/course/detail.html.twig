@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	 <div class="app">
+        
+        <div class="container">
+            <div class="grid">
+                <div class="row">
+                    <h1 class="text-uppercase text-center mt-3">{{course.name}} </h1>
+                    <div class="e-panel card" style="background-color: #f5f5f5">
+                        <div class="card-body">
+                            <div class="card-title">
+                            </div>
+                            <div class="e-table">
+                                <div class="table-responsive table-lg mt-3">
+                                    <table class="table table-bordered">
+                                        <thead style="text-align: center;">
+                                         <tr>
+											
+											<th>Category</th>
+											<th>Teacher</th>            
+											<th>Description</th>
+										</tr>
+                                        </thead>
+                                        <tbody style="text-align: center;">
+                                           <tr>									
+												<td>{{ course.category.name }}</td>
+                                                <td>{{course.teacher.name}}</td>
+												<td>{{ course.description }}</td>
+											</tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -2,18 +2,224 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Group 1{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+           <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
+         rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" 
+         crossorigin="anonymous">
+         	<!-- Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+        <!-- MDB -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet" />
+         <link rel="stylesheet" href="{{asset('../css/style.css')}}">
         {% endblock %}
-
+        <link rel="icon" type="image/ico" href="{{ asset('images/favicon.ico')}}"/>
         {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
+          
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js">
+        </script>
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+     
+        {% block header %}
+        <nav class="navbar  navbar-expand-lg navbar-dark p-md-3 bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">FPT.co</a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+                aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarExample01">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" aria-current="page" href="{{path('homepage')}}">Home</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_STAFF') or is_granted('ROLE_USER')%}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{path('student_index')}}">Student</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{path('teacher_index')}}">Teacher</a>
+
+                    </li>
+                    {# <li class="nav-item dropdown">
+                        <a id="navbarDropdownMenuLink" class="nav-link text-white" href="#" role="button"
+                            data-mdb-toggle="dropdown" aria-expanded="false">
+                            My Courses
+                        </a>
+                    </li> #}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{path('class_index')}}">Class</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{path('course_index')}}">Course</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <span class="mr-6 text-white">Admin</span>
+                     {% elseif is_granted('ROLE_STAFF') %}
+                     <span class="mr-6 text-white">Staff</span>
+                     {% elseif is_granted('ROLE_USER') %}
+                        <span class="mr-6 text-white">User</span>
+                     {% else %}
+                       <span class="mr-6 text-white">Not logged in!</span>
+                    {% endif %}
+                <!-- Avatar -->
+                <a class="dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button"
+                    data-mdb-toggle="dropdown" aria-expanded="false">
+                    <img src="{{ asset ('images/user.png')}}" class="rounded-circle" height="25" alt="Error!" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_STAFF') or is_granted('ROLE_USER')%}
+                    <li>
+                        <a class="dropdown-item nav-link" href="{{path('app_logout')}}">Log out</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a class="dropdown-item nav-link" href="/">Log in</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item nav-link" href="/register">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+  </nav>  
+   <div class="container mt-3 text-center col-md-5">
+            {% for error in app.flashes('error') %}
+                <p class=" alert alert-warning">{{error}}</p>
+            {% endfor %}
+            {% for errorEmpty in app.flashes('errorEmpty') %}
+            <p class=" alert alert-success">{{errorEmpty}}</p>
+            {% endfor %}
+             {% for success in app.flashes('success') %}
+            <p class=" alert alert-success">{{success}}</p>
+            {% endfor %}
+        </div>
+        {% endblock %}
+        {% block body %}
+        
+        {% endblock %}
+        {% block footer %}
+         <!-- Footer -->
+        <footer class=" mt-auto bg-dark text-center text-white">
+            <!-- Grid container -->
+            <div class="container p-5">
+
+                <section class=" justify-content-center  border-bottom"></section>
+                <!-- Section: Text -->
+
+                <!-- Section: Links -->
+                <section class="">
+                    <!--Grid row-->
+                    <div class="row">
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Members</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                
+                                <li>
+                                    <a href="https://www.facebook.com/tay.minh.1506" class="text-white">Do Minh Tay</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com/khai.lai.589" class="text-white">Lai Quang Khai</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com/ddd.990" class="text-white">Luu Trong Duc</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Courses</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Symfony & Laravel</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">PHP & NodeJS</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">HTML & Twig & CSS</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">JavaScript</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">ReactJS</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Userful Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Home</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Features</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Pricing</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">About</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--Grid column-->
+
+                        <!--Grid column-->
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Contact</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <i class="fas fa-home me-2"></i> Hanoi, DDD 111/32, VN
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope me-2"></i>group1@example.com
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone me-2"></i> + 84 666 888 99
+                                </li>
+                                <li>
+                                    <i class="fas fa-print me-2"></i> + 84 222 999 88 
+                                </li>
+                            </ul>
+                        </div>
+                        <!--Grid column-->
+                    </div>
+                    <!--Grid row-->
+                </section>
+                <!-- Section: Links -->
+            </div>
+            <!-- Grid container -->
+
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © Developed by Group 1
+            </div>
+            <!-- Copyright -->
+        </footer>
+<!-- Footer -->
+        {% endblock %}
     </body>
 </html>

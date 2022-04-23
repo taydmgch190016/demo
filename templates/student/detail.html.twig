@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	 <div class="d-flex flex-column min-vh-100">
+        
+        <div class="container">
+            <div class="grid">
+                <div class="row">
+                    <h1 class="text-uppercase text-center mt-3">{{student.name}} </h1>
+                    <div class="e-panel card" style="background-color: #f5f5f5">
+                        <div class="card-body">
+                            <div class="card-title">
+                            </div>
+                            <div class="e-table">
+                                <div class="table-responsive table-lg mt-3">
+                                    <table class="table table-bordered">
+                                        <thead style="text-align: center;">
+                                        <tr>								
+											<th>Age</th>
+											<th>Phone</th>
+											<th>Address</th>
+                                            <th>Class</th>
+										</tr>
+                                        </thead>
+                                        <tbody style="text-align: center;">
+                                            <tr>
+											<td>{{ student.age }}</td>
+											<td>{{ student.phone }}</td>
+											<td>{{ student.address }}</td>
+                                            <td>
+                                            {% for class in student.classrooms %}
+													<a href="{{path('class_detail',{'id':class.id})}}">
+													{{class.name}}
+													</a>
+                                                    <br>
+												{% endfor %}
+                                            </td>
+										</tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
